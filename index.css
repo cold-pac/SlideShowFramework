@@ -1,0 +1,55 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    font-family: Monospace;
+    font-size: 2.5vw;
+    //scroll-behavior: smooth;
+}
+body {
+    background: lemonchiffon;
+}
+.wrapper {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+.slide {
+    margin: 0;
+    padding: 0;
+    height: 90%;
+    width: 90%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+.slide-header {
+    margin: 0;
+    padding: 0;
+    font-size: 3em;
+    width: 100%;
+    text-align: center;
+}
+.intro {
+    margin: 0;
+    padding: 0;
+    background: lightsalmon !important;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+}
+.intro div {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}

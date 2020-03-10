@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Week 5 Presentation</title>
+        <link rel="stylesheet" href="index.css" /> 
+        <script>
+            window.onload = function () {
+                window.location = "#0";
+            }
+        </script>
+    </head>
+    <body>
+        <div class = "wrapper">
+            <div class = "intro slide">
+                <div>Presentation: Week 6</div>
+            </div>
+        </div>
+        <div class = "wrapper">
+            <div class = "slide">
+                <div class = "slide-header">Test</div>
+            </div>
+        </div>
+        <div class = "wrapper">
+            <div class = "slide">
+                <div class = "slide-header">Test</div>
+            </div>
+        </div>
+        <div class = "wrapper">
+            <div class = "slide">
+                <div class = "slide-header">Test</div>
+            </div>
+        </div>
+        <div class = "wrapper">
+            <div class = "slide">
+                <div class = "slide-header">Test</div>
+            </div>
+        </div>
+    </body>
+    <script>
+        let slides = Array.from(document.getElementsByClassName("wrapper"));
+        slides.forEach((elem, index) => {
+            elem.id = index;
+        });
+        console.log(slides.length);
+
+        let startingPos = 0;
+        let manageState = (changePos) => {
+            if ( (startingPos + changePos) < slides.length && (startingPos + changePos) >= 0) {
+                startingPos += changePos;
+            }
+            window.location = "#" + startingPos;
+            console.log(startingPos);
+        }
+        document.addEventListener("keydown", function(event){
+            switch(event.key) {
+                case 'n':
+                case 'N':
+                case 'ArrowRight':
+                    manageState(1)
+                    return
+                case 'b':
+                case 'B':
+                case 'ArrowLeft':
+                    manageState(-1);
+                    return
+                default:
+                    return
+            }
+        })
+    </script>
+</html>
