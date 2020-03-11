@@ -9,7 +9,7 @@ html, body {
     //scroll-behavior: smooth;
 }
 body {
-    background: lemonchiffon;
+    background: rgb(220, 233, 236);
 }
 .wrapper {
     margin: 0;
@@ -23,12 +23,13 @@ body {
 }
 .slide {
     margin: 0;
-    padding: 0;
+    padding: 1vw;
     height: 90%;
     width: 90%;
     background: white;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 .slide-header {
     margin: 0;
@@ -52,4 +53,13 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
+}
+.intro div:nth-child(2n) {
+    font-size: 0.5em;
+}
+.main-content {
+    border: 1px solid black;
+    height: 80%;
+    width: 95%;
+    padding: 2vw;
 }
