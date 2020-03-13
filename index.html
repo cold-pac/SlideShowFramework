@@ -5,9 +5,12 @@
         <link rel="stylesheet" href="index.css" /> 
         <script>
             window.onload = function () {
-                window.location = "#0";
+                window.location = "#2";
             }
         </script>
+		<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script> 
     </head>
     <body>
         <div class = "wrapper">
@@ -24,7 +27,17 @@
         </div>
         <div class = "wrapper">
             <div class = "slide">
-                <div class = "slide-header">Test</div>
+                <div class = "slide-header">TOAST Decision Tree</div>
+				<div>Neurological Examination: Difficulty in maintaining upright position, tending to fall to right even with eyes open and rapidly worsens with attempted Romberg. Right pronator drift, hypermetria of saccades to right, and 2-3 beats of nystagmus on far rightward gaze, with complaint of dizziness during this testing
+
+					CT: Subacute infarction in the territory of the left posterior inferior cerebellar artery (PICA)
+					
+					MRI: Acute/subacute infarction in bilateral PICA territories, the infarct in the right side is within the territory of left PICA as there is anomalous left PICA origin of bilateral tonsillohemispheric branches. Axial T1W fat saturation images show eccentric high signal in the left intradural vertebral artery consistent with dissection
+					
+					CT-Angiography: Subtle narrowing with probable intimal flap in the left vertebral artery just proximal to the entrance into the C2 foramen transversarium. As the artery passes the dural slip and courses vertically there is abrupt tapering with false and true lumens identified consistent with vertebral artery dissection. Slight reconstitution of vessel caliber is seen distally prior to formation of the basilar artery
+					
+					MR-Angiography: Distal left vertebral artery dissection beginning as the left vertebral artery becomes intradural, extending across the left PICA origin, and ending proximal to the vertebral basilar junction</div>
+				<div id = "TOASTtarget"></div> 
             </div>
         </div>
         <div class = "wrapper">
@@ -68,6 +81,127 @@
                 default:
                     return
             }
-        })
+        });
+		
+		let LAA = 'Large Artery Atherosclerosis'
+		let CE = 'Cardiac Source of Embolism' 
+		let LAC = 'Small-Vessel Occlusion (Lacune)'
+		let SOD = 'Stroke of Other Determined Aetiology'
+		let UT = 'Undetermined Aetiology (Cryptogenic)'	
+		
+		let testArr = [{
+			question: 'Was angiography performed?',
+			answerYes: 1,
+			answerNo: 8
+		}, 
+		{
+			question: 'Was stenosis >50% of a large extracranial artery supplying the area of ischaemia found?',
+			answerYes: 2,
+			answerNo: 4
+		},
+		{
+			question: 'Are there any potential cardioembolic sources?',
+			answerYes: 'Undetermined - two or more potential causes',
+			answerNo: 3
+		},
+		{
+			question: 'Does the patient have a classical lacunar syndrome, with or without a small (<1.5cm) subcortical lacunar infarct pattern?',
+			answerYes: 'Undetermined - two or more potential causes',
+			answerNo: 'Large Artery Atherosclerosis'
+		},
+		{
+			question: 'Are there any potential cardioembolic sources?',
+			answerYes: 5,
+			answerNo: 6
+		},
+		{
+			question: 'Does the patient have a classical lacunar syndrome, with or without a small (<1.5cm) subcortical lacunar infarct pattern?',
+			answerYes: 'Undetermined - two or more potential causes (Cardioembolic and Lacunar)',
+			answerNo: 'Cardioembolism'
+		},
+		{
+			question: 'Does the patient have any rare causes of stroke?',
+			answerYes: 'Stroke of Other Determined Aetiology',
+			answerNo: 7,
+		}, 
+		{
+			question: 'Does the patient have a classical lacunar syndrome, with or without a small (<1.5cm) subcortical lacunar infarct pattern?',
+			answerYes: 'Small-vessel Disease (Lacune)',
+			answerNo: 'Undetermined Aetiology owing to a Negative Evaluation'
+		},
+		{
+			question: 'Are there any high-risk cardioembolic sources?',
+			answerYes: 'Cardioembolism',
+			answerNo: 'Undetermined due to incomplete investigation'
+		}]
     </script>
+	<script type="text/babel">		
+		class Tree extends React.Component {
+			constructor(props) {
+				super(props);
+				this.state = {
+					test: 0,
+					leaf: false,
+				}
+				this.yesClick = this.yesClick.bind(this);
+				this.noClick = this.noClick.bind(this);
+				this.resetEverything = this.resetEverything.bind(this);
+			}
+
+			yesClick () {
+				if (typeof testArr[this.state.test].answerYes === "number") {
+						this.setState(function (state, props) {
+						return {test: testArr[state.test].answerYes}
+					})
+				} else {
+					this.setState(function (state, props) {
+						return {leaf: true, answer: testArr[state.test].answerYes}
+					})
+				}
+			}
+
+			noClick () {
+				if (typeof testArr[this.state.test].answerNo === "number") {
+						this.setState(function (state, props) {
+						return {test: testArr[state.test].answerNo}
+					})
+				} else {
+					this.setState(function (state, props) {
+						return {leaf: true, answer: testArr[state.test].answerYes}
+					})
+				}		
+			}
+
+			resetEverything () {
+				this.setState({
+					test: 0,
+					leaf: false,
+				})
+			}
+
+			render () {
+				if (!this.state.leaf) {
+					return (
+					<div id = "container">
+						<div className = "questions">{testArr[this.state.test].question}</div>
+						<div className = "buttonContainer">
+							<button onClick = {this.yesClick} id = "testYes">Yes</button>
+							<button onClick = {this.noClick} id = "testNo">No</button>
+						</div> 
+					</div>
+					);		
+				} else {
+					return (
+					<div id = "container">
+						<div>TOAST category:</div>
+						<div className = "answer">{this.state.answer}</div>
+						<button onClick = {this.resetEverything}>Try Again</button> 
+					</div>
+					);	
+				}
+			}
+		}
+		
+		ReactDOM.render(<Tree />, document.getElementById("TOASTtarget"));
+	</script> 
 </html>
