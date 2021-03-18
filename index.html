@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Week 7 Presentation</title>
+        <title>Test: Deep Venous Thrombosis</title>
         <link rel="stylesheet" href="index.css" /> 
         <script>
             window.onload = function () {
@@ -11,44 +11,32 @@
 		<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script> 
-    </head>
+	
+		<style>
+			.question {
+				background-color: aqua;
+			}
+		</style>
+	
+	</head>
     <body>
         <div class = "wrapper">
             <div class = "intro slide">
-                <div>Presentation: Week 7</div>
-                <div>Erol Cimen</div>
+                <div>Test! Very important test</div>
+				<div>Were you paying attention?</div>
+				<button><a href = "#1">Start</a></button>
             </div>
         </div>
         <div class = "wrapper">
             <div class = "slide">
-                <div class = "slide-header">Test</div>
-                <div class = "main-content">It would be cool if you had an interactive pathway for TOAST classification + worked example</div>
-            </div>
-        </div>
-        <div class = "wrapper">
-            <div class = "slide">
-                <div class = "slide-header">TOAST Decision Tree</div>
-				<div>
-					<ul>
-						<li>Neuro Exam: Postural Instability</li>
-						<li>CT: infarct in PICA territory</li>
-						<li>MRI: </li>
-						<li>MR-Angiography: left vertebral artery dissection</li>
-					</ul>
+                <div class = "slide-header">Test!!!!!</div>
+                <div class = "main-content">
+					<div id = "TOASTtarget"></div> 
 				</div>
-				<div id = "TOASTtarget"></div> 
             </div>
         </div>
-        <div class = "wrapper">
-            <div class = "slide">
-                <div class = "slide-header">Test</div>
-            </div>
-        </div>
-        <div class = "wrapper">
-            <div class = "slide">
-                <div class = "slide-header">Test</div>
-            </div>
-        </div>
+        
+				
     </body>
     <script>
         let slides = Array.from(document.getElementsByClassName("wrapper"));
@@ -65,6 +53,7 @@
             window.location = "#" + startingPos;
             console.log(startingPos);
         }
+		/* 
         document.addEventListener("keydown", function(event){
             switch(event.key) {
                 case 'n':
@@ -81,6 +70,7 @@
                     return
             }
         });
+		*/ 
 		
 		let LAA = 'Large Artery Atherosclerosis'
 		let CE = 'Cardiac Source of Embolism' 
@@ -88,51 +78,31 @@
 		let SOD = 'Stroke of Other Determined Aetiology'
 		let UT = 'Undetermined Aetiology (Cryptogenic)'	
 		
-		let testArr = [{
-			question: 'Was angiography performed?',
-			answerYes: 1,
-			answerNo: 8
+		let questionArray= [{
+			question: 'What is DVT?',
+			correctAnswer: 'deep venous thrombosis', 
+			incorrectAnswer1: 'something in the lungs', 
+			incorrectAnswer2: 'Something in the brain'
 		}, 
 		{
-			question: 'Was stenosis >50% of a large extracranial artery supplying the area of ischaemia found?',
-			answerYes: 2,
-			answerNo: 4
+			question: 'What is my favourite colour?',
+			correctAnswer: 'red', 
+			incorrectAnswer1: 'lime green', 
+			incorrectAnswer2: 'blue'
 		},
 		{
-			question: 'Are there any potential cardioembolic sources?',
-			answerYes: 'Undetermined - two or more potential causes',
-			answerNo: 3
-		},
-		{
-			question: 'Does the patient have a classical lacunar syndrome, with or without a small (<1.5cm) subcortical lacunar infarct pattern?',
-			answerYes: 'Undetermined - two or more potential causes',
-			answerNo: 'Large Artery Atherosclerosis'
-		},
-		{
-			question: 'Are there any potential cardioembolic sources?',
-			answerYes: 5,
-			answerNo: 6
-		},
-		{
-			question: 'Does the patient have a classical lacunar syndrome, with or without a small (<1.5cm) subcortical lacunar infarct pattern?',
-			answerYes: 'Undetermined - two or more potential causes (Cardioembolic and Lacunar)',
-			answerNo: 'Cardioembolism'
-		},
-		{
-			question: 'Does the patient have any rare causes of stroke?',
-			answerYes: 'Stroke of Other Determined Aetiology',
-			answerNo: 7,
+			question: 'Who is taller? ',
+			correctAnswer: 'Erol', 
+			incorrectAnswer1: 'Jeffrey', 
+			incorrectAnswer2: 'Callum'
 		}, 
 		{
-			question: 'Does the patient have a classical lacunar syndrome, with or without a small (<1.5cm) subcortical lacunar infarct pattern?',
-			answerYes: 'Small-vessel Disease (Lacune)',
-			answerNo: 'Undetermined Aetiology owing to a Negative Evaluation'
-		},
-		{
-			question: 'Are there any high-risk cardioembolic sources?',
-			answerYes: 'Cardioembolism',
-			answerNo: 'Undetermined due to incomplete investigation'
-		}]
+			question: 'Who gave the best presentation?', 
+			correctAnswer: 'Erol', 
+			incorrectAnswer1: 'Callum', 
+			incorrectAnswer2: 'Azzy', 
+		}
+		]
     </script>
 	<script type="text/babel">		
 		class Tree extends React.Component {
@@ -141,10 +111,26 @@
 				this.state = {
 					test: 0,
 					leaf: false,
+					name: false,
+					begun: false,
+					nameEntered: false,
+					name: '',
+					test: 'asdf',
+					numQuest: 0, 
+					score: 0, 
+					correctAnswer: '', 
+					incorrectAnswer1: '',
+					incorrectAnswer2: '', 
+					questionIndex: 0
 				}
 				this.yesClick = this.yesClick.bind(this);
 				this.noClick = this.noClick.bind(this);
 				this.resetEverything = this.resetEverything.bind(this);
+				this.beginTest = this.beginTest.bind(this); 
+				this.handleChange = this.handleChange.bind(this); 
+				this.beginRealTest = this.beginRealTest.bind(this); 
+				this.nextQuestion = this.nextQuestion.bind(this); 
+				this.answer = this.answer.bind(this); 
 			}
 
 			yesClick () {
@@ -178,25 +164,85 @@
 				})
 			}
 
+			beginTest () {
+				this.setState({
+					begun: true, 
+				})
+			}
+
+			handleChange (event) {
+				console.log('works')
+				this.setState({name: event.target.value}); 
+			}
+
+			beginRealTest () {
+				console.log(this.state.name); 
+				this.setState({
+					numQuest: (this.state.numQuest + 1), 
+					questionIndex: (this.state.questionIndex + 1), 
+				}); 
+				this.setState({
+					nameEntered: true, 
+					currentQuestion: questionArray[this.state.questionIndex].question, 
+					correctAnswer: questionArray[this.state.questionIndex].correctAnswer,
+					incorrectAnswer1: questionArray[this.state.questionIndex].incorrectAnswer1,
+					incorrectAnswer2: questionArray[this.state.questionIndex].incorrectAnswer2
+				
+				}); 
+			}
+
+			nextQuestion () {
+				this.setState({
+					numQuest: (this.state.numQuest + 1), 
+					questionIndex: (this.state.questionIndex + 1), 
+				}); 
+				this.setState({
+					nameEntered: true, 
+					currentQuestion: questionArray[this.state.questionIndex].question, 
+					correctAnswer: questionArray[this.state.questionIndex].correctAnswer,
+					incorrectAnswer1: questionArray[this.state.questionIndex].incorrectAnswer1,
+					incorrectAnswer2: questionArray[this.state.questionIndex].incorrectAnswer2
+				
+				}); 
+			}
+
+			answer () {
+				if (this.state.name == "Azzy" || this.state.name == "azzy" || this.state.name == "Azleena") {
+
+				} else {
+					this.setState({score: (this.state.score + 1)}); 
+				}
+			}
+
 			render () {
-				if (!this.state.leaf) {
+				if (!this.state.begun) {
 					return (
 					<div id = "container">
-						<div className = "questions">{testArr[this.state.test].question}</div>
-						<div className = "buttonContainer">
-							<button onClick = {this.yesClick} id = "testYes">Yes</button>
-							<button onClick = {this.noClick} id = "testNo">No</button>
-						</div> 
+						<button onClick = {this.beginTest}>Begin test?</button>
 					</div>
 					);		
-				} else {
+				} else if (!this.state.nameEntered) {
 					return (
 					<div id = "container">
-						<div>TOAST category:</div>
-						<div className = "answer">{this.state.answer}</div>
-						<button onClick = {this.resetEverything}>Try Again</button> 
+						<div>What is your name?</div>
+						<input value = {this.state.name} onChange = {this.handleChange} /> 
+						<button onClick = {this.beginRealTest}>Next</button> 
 					</div>
 					);	
+				} else { 
+					return (
+						<div id = "container">
+							<div id = "stats">
+								<div>Name: {this.state.name}</div>
+								<div>Score: {this.state.score}/{this.state.numQuest}</div> 
+							</div> 
+							<div id = "question">{this.state.currentQuestion}</div>
+							<button className = "question" onClick = {this.answer}>{this.state.correctAnswer}</button>
+							<button className = "question" onClick = {this.answer}>{this.state.incorrectAnswer1}</button>
+							<button className = "question" onClick = {this.answer}>{this.state.incorrectAnswer2}</button>
+							<button onClick = {this.nextQuestion}>Next Question</button>
+						</div>
+					); 			
 				}
 			}
 		}
